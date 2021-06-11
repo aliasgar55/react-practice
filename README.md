@@ -1,2 +1,2 @@
 # react-practice
-React repo for practice react
+Git repo to practice react
