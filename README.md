@@ -1,2 +1,3 @@
 # react-practice
-Git repo to practice react
+
+React Practice Projects
