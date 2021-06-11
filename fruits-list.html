@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      crossorigin
+      src="https://unpkg.com/react@17/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <title>React app</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="text/babel">
+      const App = (props) => {
+        const [fruits, setFruits] = React.useState([
+          { name: "mango", quantity: 20 },
+          { name: "Apple", quantity: 10 },
+        ]);
+        const [input, setInput] = React.useState("");
+        const [error, setError] = React.useState(false);
+
+        const handleChange = (e) => {
+          const value = e.target.value;
+          setInput(value);
+        };
+
+        const handleSubmit = (e) => {
+          e.preventDefault();
+          const fruit = input.split("-");
+          if (input.length == 0 || fruit[1] == undefined) return;
+          setFruits([...fruits, { name: fruit[0], quantity: fruit[1] }]);
+          setInput("");
+        };
+
+        const handleRemoveFruit = (fruitName, atIndex) => {
+          const updatedFruits = fruits.filter((fruit, index) => {
+            // console.log(fruit.name === fruitName && index === atIndex);
+            return !(fruit.name === fruitName && index === atIndex);
+          });
+          console.log(updatedFruits);
+          setFruits(updatedFruits);
+        };
+        return (
+          <div>
+            <form action="" className="mx-auto" onSubmit={handleSubmit}>
+              <input
+                type="text"
+                placeholder="Apple-20"
+                value={input}
+                onChange={handleChange}
+              />
+              <button type="submit">Submit</button>
+              <table className="mt-3">
+                <tbody>
+                  {fruits.map((fruit, index) => (
+                    <tr key={fruit.quantity + fruit.name + index}>
+                      <td style={{ border: "1px solid black" }}>
+                        {fruit.name}
+                      </td>
+                      <td style={{ border: "1px solid black" }}>
+                        {fruit.quantity}
+                      </td>
+                      <td
+                        style={{ border: "1px solid black" }}
+                        onClick={() => handleRemoveFruit(fruit.name, index)}
+                      >
+                        Delete
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </form>
+          </div>
+        );
+      };
+
+      ReactDOM.render(<App />, document.getElementById("app"));
+    </script>
+  </body>
+</html>
